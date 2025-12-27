@@ -1,0 +1,21 @@
+Install Instructions For extDB
+
+Server Side and Database:
+
+1. Navigate to Server_Files/@extDB/extdb-conf.ini and edit to your servers database type, port, 
+   user name Id and password
+2. Copy @extDB folder to the root of your arma server.
+3. Add '@extDB' to your servers mod list in your start bat or mod line if using a host.
+4. Run the sql query.sql into your servers database.
+5. Navigate to your dayz_server/init/server_functions.sqf and find:
+
+onPlayerDisconnected "[_uid,_name] call server_onPlayerDisconnect;";
+   
+   below that paste:
+   
+/*extDB*/
+ "extDB" callExtension "9:DATABASE:Database2";
+ "extDB" callExtension format["9:ADD:DB_RAW_V2:%1",1];
+ "extDB" callExtension "9:LOCK";
+
+extDB install complete, now move on to the Starter Kit.

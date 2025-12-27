@@ -1,0 +1,44 @@
+Player Starter Crate  **ALL CREDIT GOES TO CHOC, THANK YOU CHOC FOR YOUR HELP
+
+**You will need to install the included extDB first prior to this install.
+extDB instructions are included.**
+
+**Mission side**
+1. Add the scripts folder to your MP Mission (Map name) folder.
+   Or add the starter_kit folder (in the scripts folder) to your existing scripts folder
+
+2. In the init file paste:
+
+	execVM "scripts\starter_kit\player_login.sqf";
+	
+under: 	
+
+if (DZE_R3F_WEIGHT) then {execVM "\z\addons\dayz_code\external\R3F_Realism\R3F_Realism_Init.sqf";};
+
+4. Add:
+
+		//Starter Kit
+		["Smartphone_DZE","Starter Kit","execVM 'scripts\starter_kit\player_starterkit.sqf';","true"]
+		
+to the DZE_CLICK_ACTIONS section on the configVariables.sqf.
+** If this will be the last entry, remove the last comma after true.
+You can use a radio or any item you wish.
+
+**Server side**
+5. Go to your dayz_server folder, navigate to init/server_functions.sqf and find:
+
+ "extDB" callExtension "9:LOCK";
+
+under that paste:
+
+/*Starter Kit*/
+	fn_async =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\starterkit\fn_async.sqf";
+	server_queryStartKit = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\starterkit\server_queryStartKit.sqf";
+	server_claimstartkit = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\starterkit\server_claimstartkit.sqf";
+	"PVDZE_ClaimStartKit" 	addPublicVariableEventHandler {(_this select 1) spawn server_claimstartkit;	};
+	"PVDZE_queryStartKit" 	addPublicVariableEventHandler {(_this select 1) spawn server_queryStartKit;	};
+	
+6. Add the starterkit folder(found in the included server folder) to your dayz_server\compile folder.
+
+7. Complete! You can edit the kit loadout in scripts/starter_kit/player_starterkit.sqf
+look for: _crateMags = [. **Pay special attention to the code flow**
